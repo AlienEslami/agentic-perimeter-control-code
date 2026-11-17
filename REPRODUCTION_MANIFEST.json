@@ -4932,13 +4932,13 @@
       "compression": "none"
     },
     "README.md": {
-      "stored_sha256": "ecc73fd6441ee9286ef4ac6ec9542fcdcc17120f7d485e34d90c473714abecdb",
-      "source_sha256": "ecc73fd6441ee9286ef4ac6ec9542fcdcc17120f7d485e34d90c473714abecdb",
+      "stored_sha256": "180cdb0895b44c6ea0d010f5bed8a8af479133990cb53ee7606a707abe271e7f",
+      "source_sha256": "180cdb0895b44c6ea0d010f5bed8a8af479133990cb53ee7606a707abe271e7f",
       "compression": "none"
     },
     "REPRODUCING.md": {
-      "stored_sha256": "9ef35c29b6a5296c45cf732aaed907007ff7be16a710b5ece5ffeccad3236e56",
-      "source_sha256": "9ef35c29b6a5296c45cf732aaed907007ff7be16a710b5ece5ffeccad3236e56",
+      "stored_sha256": "11ff213a239e0e1ae3fa78502d5a8575d3a29b60a2a7863a601d2a9ba272fdd3",
+      "source_sha256": "11ff213a239e0e1ae3fa78502d5a8575d3a29b60a2a7863a601d2a9ba272fdd3",
       "compression": "none"
     },
     "requirements.txt": {
@@ -4957,8 +4957,8 @@
       "compression": "none"
     },
     "scripts/audit_repository_records.py": {
-      "stored_sha256": "009af944dd082d44b0d7fb0758d1db5368dfa14364e18ab557231890f43be80d",
-      "source_sha256": "009af944dd082d44b0d7fb0758d1db5368dfa14364e18ab557231890f43be80d",
+      "stored_sha256": "b99eaed3b0ba4fa0792a61371c7410ce1dd0da0f0f92f146aefe8f66b8e539b2",
+      "source_sha256": "b99eaed3b0ba4fa0792a61371c7410ce1dd0da0f0f92f146aefe8f66b8e539b2",
       "compression": "none"
     },
     "scripts/plot_partb_traffic_results_2026_11_15.py": {
@@ -5004,6 +5004,21 @@
     "SOURCE_MANIFEST.json": {
       "stored_sha256": "b41c474d2c9c762b5158eeed41b95c1b002103f43a09a8ad11d2898432069551",
       "source_sha256": "b41c474d2c9c762b5158eeed41b95c1b002103f43a09a8ad11d2898432069551",
+      "compression": "none"
+    },
+    "docs/STUDIES.md": {
+      "stored_sha256": "704d0bcadf263b9dde6c71cc1f74f92f409569ad1f1e04862d61a64297ead19b",
+      "source_sha256": "704d0bcadf263b9dde6c71cc1f74f92f409569ad1f1e04862d61a64297ead19b",
+      "compression": "none"
+    },
+    "docs/assets/two-region-recovery.png": {
+      "stored_sha256": "e16e229a9d6d2ce606b7ea7f906379cd68e38e124c3924a32b3a2d2da20ec3cc",
+      "source_sha256": "e16e229a9d6d2ce606b7ea7f906379cd68e38e124c3924a32b3a2d2da20ec3cc",
+      "compression": "none"
+    },
+    "reproduce.py": {
+      "stored_sha256": "bda334b5b2e3223c85660b429534382d66cd8eab2a3f6d99803a24d86d12429c",
+      "source_sha256": "bda334b5b2e3223c85660b429534382d66cd8eab2a3f6d99803a24d86d12429c",
       "compression": "none"
     }
   }

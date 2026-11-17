@@ -1,40 +1,82 @@
-# Agentic perimeter-control reproducibility code
+# Agentic perimeter control
 
-Code and experimental records for **A Formal Guarantee for Trustworthy Agentic Traffic Control: A Multi-region Perimeter Case**, by Ali Eslami and Jiangbo Yu.
+Research code for **A Formal Guarantee for Trustworthy Agentic Traffic Control: A Multi-region Perimeter Case**, by **Ali Eslami and Jiangbo Yu**.
 
-This repository contains the traffic models, MPC-based planning tools, constraint-verification and plan-repair implementations, simulation settings, and saved experimental evidence used in the manuscript. It is a curated snapshot of the research code, with a fresh repository history. Earlier manuscripts, document-editing scripts, and preparation files are excluded.
+[Get started](#quick-start) · [Browse the studies](docs/STUDIES.md) · [Reproduction guide](REPRODUCING.md) · [Paper release](https://github.com/AlienEslami/agentic-perimeter-control-code/releases/tag/paper-2026-11-17)
+
+## What the code does
+
+The framework checks proposed urban perimeter-control plans before implementation. It uses a traffic model based on the macroscopic fundamental diagram (MFD) to bound future regional vehicle counts and exterior queues under initial-state and arrival-forecast uncertainty. A supervisory agent accepts a verified plan, seeks a repaired plan, or continues the current plan when a replacement cannot be verified in time.
+
+The package includes the traffic models, MPC-based planning tools, constraint verification, plan repair, and the saved evidence for the two- and three-region experiments. The numerical planning tools return control schedules; replanning takes place through a newly verified replacement.
+
+## Example: recovery from congestion
+
+![Two-region recovery: regional vehicle counts, exterior queue, and MFD operating points for proposed, repaired and backup plans.](docs/assets/two-region-recovery.png)
+
+The proposed plan reduces regional congestion but overfills the exterior queue in the illustrated simulation. The repaired plan accommodates more entering traffic and satisfies the queue limit and the Region 1 deadline. The shaded bounds cover the repaired plan's specified uncertainty set. [Study details and source files →](docs/STUDIES.md#two-region-recovery)
 
 ## Quick start
 
-Use Python 3.12. From the repository root:
+Use **Python 3.12**. Clone this repository, or [download the current code and records](https://github.com/AlienEslami/agentic-perimeter-control-code/archive/refs/heads/main.zip) and extract the archive.
 
-```text
-python -m pip install -r requirements.txt
-python scripts/prepare_records.py
-python -B scripts/audit_repository_records.py
-python -B scripts/audit_current_results_2026_11_15.py
-python -B scripts/smoke_check.py
+```sh
+git clone https://github.com/AlienEslami/agentic-perimeter-control-code.git
+cd agentic-perimeter-control-code
+python -m venv .venv
 ```
 
-Saved records are compressed in `data/study_records.zip`. The setup command verifies their hashes and restores their original relative paths. It refuses to overwrite a file whose contents differ. The audits require no network access or paid model calls.
+Activate the environment using the command for your shell:
 
-See [REPRODUCING.md](REPRODUCING.md) for the mapping between the manuscript's results, code, settings and saved records, and instructions for rerunning experiments. Dates in study-directory names identify the source experiments; they do not identify different manuscript versions.
+| Shell | Command |
+|---|---|
+| Windows PowerShell | `.\.venv\Scripts\Activate.ps1` |
+| Windows Command Prompt | `.venv\Scripts\activate.bat` |
+| macOS/Linux | `source .venv/bin/activate` |
 
-## Organization
+Then run:
 
-- `benchmarks/reusable_perimeter_suite_2026-09-26/`: two-region dynamics, planning, verification, repair, controller comparisons, successive requests, delays, and agent experiments.
-- `benchmarks/reviewer_strengthening_2026-11-11/`: the reported numerical evaluation, congested recovery, timing, and model-error sensitivity.
-- `benchmarks/three_region_recovery_2026-11-16/`: three-region congested recovery, source snapshots and reproduction driver.
-- Other `benchmarks/` directories: coordinate comparisons, fixed-plan checks, connected-ring results, and inputs used by these studies.
-- `scripts/`: record preparation, offline audits and result plotting.
-- `data/`: compressed numerical records and their integrity manifest.
+```sh
+python -m pip install -r requirements.txt
+python reproduce.py check
+python reproduce.py figures
+```
 
-The models use hours and, internally in several routines, units of 100 vehicles. Reports and plots convert counts and rates to vehicles and veh/h. Study protocols specify the exact conversion and uncertainty sets.
+- **`check`** restores the saved records, verifies file and certificate hashes, checks reported numerical summaries, and runs a model/interval-arithmetic check with an independent trajectory simulation.
+- **`figures`** recreates the two- and three-region recovery plots from saved records. PDF and PNG copies appear in **`output/figures/`**.
 
-Experimental AI-agent prompts, tool calls, model identifiers and responses are retained because they are evidence for the agent study. Repeating live API experiments is optional, requires separate credentials, and incurs charges. No credentials are included.
+These commands run locally without language-model API calls. The bundled records occupy about **88 MiB compressed**. Checking and plotting use the saved experiments; see the [reproduction guide](REPRODUCING.md) for fresh simulations.
 
-## Version and provenance
+## Find the relevant study
 
-Use release **`paper-2026-11-17`** when citing this package. `SOURCE_MANIFEST.json` identifies the source repository, commit and original file hashes. `REPRODUCTION_MANIFEST.json` records the packaged files. [PROVENANCE.md](PROVENANCE.md) describes the packaging changes. Numerical kernels, frozen plans, protocols used in certificate hashes, and saved numerical results retain their original contents.
+| Interest | Start here |
+|---|---|
+| Congestion recovery and queue protection | [Two-region](docs/STUDIES.md#two-region-recovery) and [three-region](docs/STUDIES.md#three-region-recovery) studies |
+| Regional priorities and traffic cost of repair | [Planning and controller comparisons](docs/STUDIES.md#regional-priorities-and-controller-comparisons) |
+| State uncertainty and verification bounds | [Coordinates and uncertainty](docs/STUDIES.md#coordinates-and-uncertainty) |
+| Replanning and computation delays | [Successive requests and delayed implementation](docs/STUDIES.md#successive-requests-and-delayed-implementation) |
+| Agent instructions and tool use | [Agent experiments](docs/STUDIES.md#agent-experiments) |
+| Model mismatch and larger networks | [Additional studies](docs/STUDIES.md#additional-studies) |
 
-Certificates apply to the model and uncertainty sets specified in the manuscript. Sampled traffic simulations and perturbed-model tests have their separately stated scope. Recorded runtimes depend on hardware and load.
+## Repository structure
+
+| Location | Contents |
+|---|---|
+| [reproduce.py](reproduce.py) | Entry point for checks, figures and a fresh three-region run |
+| [benchmarks/](benchmarks/) | Study drivers, traffic models, planning and verification code, and protocols |
+| [scripts/](scripts/) | Record preparation, numerical audits and plotting |
+| [data/](data/) | Compressed experimental records and their integrity manifest |
+| [docs/STUDIES.md](docs/STUDIES.md) | Links from each study to its implementation and saved evidence |
+| `output/figures/` | Recovery plots generated locally; not part of the download |
+
+The existing study paths are retained because stored certificates identify their source files. Dates in these paths identify experiments. The study guide provides topic-based navigation.
+
+## Reproducibility
+
+The manuscript's fixed code snapshot is [release `paper-2026-11-17`](https://github.com/AlienEslami/agentic-perimeter-control-code/releases/tag/paper-2026-11-17). The commands above apply to the current `main` branch, which adds navigation and command-line conveniences around the same numerical code and records. The release contains its own reproduction instructions.
+
+[REPRODUCTION_MANIFEST.json](REPRODUCTION_MANIFEST.json) records the package hashes. [SOURCE_MANIFEST.json](SOURCE_MANIFEST.json) and [PROVENANCE.md](PROVENANCE.md) document the imported research code. The preparation command verifies and restores bundled records without overwriting changed files.
+
+Verification guarantees apply to the specified traffic model and uncertainty bounds. Model-perturbation experiments are identified separately in the study guide. Timing measurements depend on hardware and load.
+
+Saved agent prompts, tool calls and responses are included as experimental evidence. Repeating live agent experiments is optional, requires separate credentials and incurs API charges; see the [agent instructions](REPRODUCING.md#optional-agent-experiments).

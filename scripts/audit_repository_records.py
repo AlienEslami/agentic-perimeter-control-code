@@ -32,8 +32,9 @@ def main():
         original = gzip.decompress(stored) if record["compression"] == "gzip" else stored
         assert hashlib.sha256(original).hexdigest() == record["source_sha256"], relative
     sources = 0
-    for path in ROOT.rglob("*.py"):
-        if ".git" not in path.parts and "__pycache__" not in path.parts:
+    for relative in manifest["files"]:
+        if relative.endswith(".py"):
+            path = ROOT / relative
             ast.parse(path.read_text(encoding="utf-8-sig"), filename=str(path))
             sources += 1
     proof_count = 0
