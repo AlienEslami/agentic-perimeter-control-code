@@ -1,0 +1,5 @@
+# Numerical experiments: Python 3.12.
+numpy==2.4.6
+scipy==1.18.0
+mpmath==1.3.0
+matplotlib==3.11.0
